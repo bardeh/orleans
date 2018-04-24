@@ -21,5 +21,11 @@ namespace HelloWorld.Grains
             logger.LogInformation($"SayHello message received: greeting = '{greeting}'");
             return Task.FromResult($"You said: '{greeting}', I say: Hello!");
         }
+
+        Task<string> IHello.SayEcho(string greeting)
+        {
+            logger.LogInformation($"SayEcho message received: greeting = '{greeting}'");
+            return Task.FromResult($"{greeting}");
+        }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Orleans;
 using Orleans.Configuration;
 using Orleans.Hosting;
+using OrleansDashboard;
 
 namespace OrleansSiloHost
 {
@@ -47,7 +48,11 @@ namespace OrleansSiloHost
                 })
                 .Configure<EndpointOptions>(options => options.AdvertisedIPAddress = IPAddress.Loopback)
                 .ConfigureApplicationParts(parts => parts.AddApplicationPart(typeof(HelloGrain).Assembly).WithReferences())
-                .ConfigureLogging(logging => logging.AddConsole());
+                .ConfigureLogging(logging => logging.AddConsole())
+				.UseDashboard(options => {
+                    options.Port = 9090;
+                })
+                .AddMemoryGrainStorage("Default");
 
             var host = builder.Build();
             await host.StartAsync();
